@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Car{
+            constructor(title,price){
+                this.title = title;
+                this.price = price;
+                
+            }
+        }
+
+        class Factory{
+            creareCar(title){
+                let car = new Car(title,parseInt(Math.random()*(5000-1000)+1000));
+                return car;
+            }
+        }
+
+        class Order{
+            constructor(){
+                this.cars = [];
+                this.sumOrder =0;
+                this.creareOrder();
+                this.show();
+
+            }
+
+            creareOrder(){
+                let marki =['VW','Skoda','LADA'];
+                let n = parseInt(Math.random()*30+20);
+                let factory = new Factory();
+                for (let i=0;i<n;i++){
+                    this.cars.push(factory.creareCar(marki[parseInt(Math.random()*marki.length)]));
+                    this.sumOrder +=this.cars[i].price;
+                }
+            }
+
+            show(){
+                for(let car of this.cars){
+                    console.log(`Фвтомобиль ${car.title} стоит ${car.price}`);
+                }
+                 console.log(`Сумма заказа ${this.sumOrder}`);
+
+            }
+        }
+
+        let order = new Order();
+       
+    </script>
+
+</body>
+</html>
