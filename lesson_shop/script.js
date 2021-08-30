@@ -1,11 +1,12 @@
 'use strict';
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
 class GoodItem{
-    constructor(item){
-        this.title = item.title;
-        this.price = item.price;
-        this.img = item.img;
-        this.description = item.description;
+    constructor(product,img ="img/product_img1.jpg"){
+        this.title = product.product_name;
+        this.price =  product.price;
+        this.img = img;
+        this.id = product.id_product;;
     };
 
     render() {
@@ -25,7 +26,7 @@ class GoodItem{
                             <a href="product.html" class="product__link">
                                 <h3 class="heading_h3">${this.title}</h3>
                             </a>
-                            <p class="text product__text">${this.description}</p>
+                            <p class="text product__text">${this.id}</p>
                             <p class="product__text_pink padding_sale">${this.price}</p>
                         </div>
                 </article>`;
@@ -37,21 +38,23 @@ class Goods{
     constructor(){
         this.goods = [];
         this.sumGoods = 0;
-        this._generateProducts();
+        this._getProducts()
+         .then(data => { //data - объект js
+                 this.goods = [...data];
+                 this.render()
+            });
         this.summGoods();
-        this.render();
+        // this.render();
     }
 
-    _generateProducts(){
-        this.goods = [
-            { id: 1, title: 'Мужская куртка', price: 5500 ,img:'img/product_img1.jpg',description:'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.'},
-            { id: 2, title: 'Женский костюм', price: 3700,img:'img/product_img2.jpg',description:'Не следует, однако, забывать о том, что курс на социально-ориентированный...' },
-            { id: 3, title: 'Мужские шорты', price: 1500,img:'img/product_img3.jpg',description:'Не следует, однако, забывать о том, что курс на социально-ориентированный...'  },
-            { id: 4, title: 'Мужская куртка', price: 5500 ,img:'img/product_img1.jpg',description:'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.'},
-            { id: 5, title: 'Женский костюм', price: 3700,img:'img/product_img2.jpg',description:'Не следует, однако, забывать о том, что курс на социально-ориентированный...' },
-            { id: 6, title: 'Мужские шорты', price: 1500,img:'img/product_img3.jpg',description:'Не следует, однако, забывать о том, что курс на социально-ориентированный...'  },
-        ];
-    };
+    _getProducts(){
+      
+        return fetch(`${API}/catalogData.json`)
+            .then(result => result.json())
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
     summGoods() {
 
@@ -81,36 +84,44 @@ class Goods{
 
 }
 
-class BasketItem {
-    // constructor(title,price,img){
 
-    // }
-
-    // render(){
-
-    // }
-}
 
 class Basket {
-//     constructor() {}
-       
-    
-//     // Добавление товара в корзину 
-//     addToBasket() {
-        
-//     }
-
-//     // Удаление товара из корзины 
-//     deleteFromBasket() {}
-
-//     // Считаем стоимость и количество товаров в корзине
-//     calcBasket() {}
-
-  
-//     // Рендер динамического содержимого корзины
-//     render() {}
+    constructor(container=".header__basket") {
+        this.container=container;
+        this.goods =[];
+        this._clickBasket();
+        this._getBasketItem()
+            .then(data => { //data - объект js
+                this.goods = [...data.contents];
+                this.render()
+            });
+    }
 
 
+    _getBasketItem() {
+        return fetch(`${API}/getBasket.json`)
+            .then(result => result.json())
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    render() {
+        const block = document.querySelector(this.container);
+        for (let product of this.goods) {
+            const productObj = new BasketItem();
+            
+            block.insertAdjacentHTML('beforeend', productObj.render(product));
+        }
+
+    }
+
+    _clickBasket(){
+        document.querySelector('header__clickBasket').addEventListener('click',()=>{
+            document.querySelector(this.container).classList.toogle('invisible');
+        })
+    }
 
 }
 
