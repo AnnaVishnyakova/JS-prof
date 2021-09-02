@@ -118,12 +118,37 @@ class Basket {
     }
 
     _clickBasket(){
-        document.querySelector('header__clickBasket').addEventListener('click',()=>{
-            document.querySelector(this.container).classList.toogle('invisible');
+        document.getElementById('header__saleButton').addEventListener('click',()=>{
+            document.querySelector(this.container).classList.toggle('invisible');
         })
     }
 
 }
+class BasketItem {
+  
+    render(product) {
+        return `<div class="header__sale-id" data-id="${product.id_product}">
+    <img src="${product.img}" alt="Sale image">
+    <div class="header__sale-content">
+        <p class="header__sale-title">
+            ${product.product_name}
+        </p>
+        <p class="header__price-item">Цена за товар:$${product.price}</p>
+        <p class="header__sale-quantity">Количество: ${product.quantity}</p>
+    </div>
+    <div class="header__price">
+        <p class="product-price">$${product.quantity * product.price}</p>
+        
+    </div>
+    <div class="close">
+    <button class="header__sale-close" data-id="${product.id_product}">&times;</button></div>
+</div>`
+    }
+}
+
+let bask = new Basket();
+
+
 
 let list = new Goods();
 

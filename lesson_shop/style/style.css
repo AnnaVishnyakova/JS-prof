@@ -259,9 +259,12 @@ color: #000000;
   color: white;
 }
 
-/* .invisible{
+.invisible{
     display: none;
-} */
+}
+#header__clickBasket{
+  position: relative;
+}
 
 
 .header__basket{
@@ -270,9 +273,34 @@ color: #000000;
     box-sizing: border-box;
     right: 0;
     top: 130%;
+    z-index: 2;
     position: absolute;
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    width: 500px;
 }
+.header__sale-id{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid gray;
+        padding: 10px;
+        position: relative;
+    }
+.header__sale-close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  background-color: #2f2a2d;
+    padding: 5px 5px;
+    border: 1px solid transparent;
+    color: #fafafa;
+    border-radius: 5px;
+    transition: all ease-in-out .4s;
+    cursor: pointer;
+}
+
+
+

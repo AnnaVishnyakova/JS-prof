@@ -1,0 +1,28 @@
+
+<div class="header__sale-id" data-id="${product.id_product}">
+    <img src="${product.img}" alt="Sale image">
+    <div class="header__sale-content">
+        <p class="header__sale-title">
+            ${product.product_name}
+        </p>
+        <p class="header__price-item">Цена за товар:$${product.price}</p>
+        <p class="header__sale-quantity">Количество: ${product.quantity}</p>
+    </div>
+    <div class="header__price">
+        <p class="product-price">$${product.quantity * product.price}</p>
+        <button class="del-btn" data-id="${product.id_product}">&times;</button>
+    </div>
+    <div class="close"></div>
+</div>
+
+<style>
+    .header__sale-id{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid gray;
+        padding: 10px;
+    }
+
+
+</style>
