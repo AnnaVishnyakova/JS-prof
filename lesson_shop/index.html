@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <div id="app">
 
     <header class="header">
         <div class="container header__box">
@@ -17,22 +18,23 @@
                 <a class="header__logo" href="">
                     <img src="img/mini-logo.png" alt="logo">
                 </a>
-                <img src="img/search.png" alt="search">
+                <form action="#" class="header__search-form" @submit.prevent="filter">
+                    <input type="text" class="header__search-field" v-model="userSearch">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
     
             <div class="header__right">
-    
-    
-    
-    
-                <div class="header__item">
+                 <div class="header__item">
                     <input type="checkbox" id="burger">
                     <label class="header__menu" for="burger">
                         <svg width="32" height="23" viewBox="0 0 32 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 23V20.31H32V23H0ZM0 12.76V10.07H32V12.76H0ZM0 2.69V0H32V2.69H0Z" fill="#E8E8E8" />
                         </svg>
                     </label>
-                    <nav class="header__nav">
+                    <!-- <nav class="header__nav">
                         <div class="nav__wrap">
                             <label class="nav__close" for="burger"><svg width="13" height="13" viewBox="0 0 13 13"
                                     fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,29 +106,96 @@
                             </div>
     
                         </div>
-                    </nav>
+                    </nav> -->
                     </input>
                 </div>
                  <div class="header__item">
                     <img src="img/lk.png" alt="" class="header__menu">
                 </div>
-                <div class="header__item" id="header__clickBasket">
+                <div class="header__item" id="header__clickBasket" @click="showCart = !showCart">
                    
-                        <img class="header__menu" id="header__saleButton" src="img/sale.png" alt="">
-                    
+                 <img class="header__menu" id="header__saleButton" src="img/sale.png" alt="">
+                  
                     <!-- <img src="img/sale.png" alt="" class="header__menu"> -->
-                    <div class="header__basket invisible"></div>
+                    <div class="header__basket" v-show="showCart">
+                        <p v-if="!cartItems.lengh">Cart is Emply</p>
+
+                        <div class="header__sale-id" v-for="item of cartItems" :key="item.id_product">
+                            <img :src="img" alt="Sale image">
+                            <div class="header__sale-content">
+                                <p class="header__sale-title">
+                                    {{item.product_name}}
+                                </p>
+                                <p class="header__price-item">Цена за товар:{{item.price}}</p>
+                                <p class="header__sale-quantity">Количество: {{item.quantity}}</p>
+                            </div>
+                            <div class="header__price">
+                                <p class="product-price">{{item.quantity * item.price}}</p>
+                        
+                            </div>
+                            <div class="close">
+                                <button class="header__sale-close" @click="remove(item)">&times;</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
 
             </div>
         </div>
     </header>
-
+ 
 
     <section class="fetured-items container">
         <h2 class="heading">Тренды этого сезона</h2>
         <p class="text text_products">Новинки этого сезона предоставлены в нашем магазине</p>
-        <div class="products">    </div>
+
+
+    <div class="products">
+        <article class="product" v-for="product of filtered" :key="product.id_product">
+            <div class="product_img"><img :src="imgProduct" alt="Some img"></div>
+            <div class="product__overlay">
+                <!-- <button class="btn">Add to cart</button> -->
+                <a href="#" class="product__btn">
+            
+                    <p class="text product__btn_text" @clik="addProduct(product)">Добавить в корзину</p>
+                </a>
+            
+            </div>
+            <div class="product__info">
+                <a href="product.html" class="product__link">
+                    <h3 class="heading_h3">{{product.product_name}}</h3>
+                </a>
+                <p class="text product__text">{{product.price}} $</p>
+                <button class="buy-btn" @click="addProduct(product)">Купить</button>
+            </div>
+        </article>
+    </div>
+
+
+<!-- <article class="product">
+    <div class="product_img">
+        <img src="${this.img}" alt="product-1">
+    </div>
+    <div class="product__overlay">
+      
+        <a href="#" class="product__btn">
+
+            <p class="text product__btn_text">Добавить в корзину</p>
+        </a>
+
+    </div>
+    <div class="product__info">
+        <a href="product.html" class="product__link">
+            <h3 class="heading_h3">${this.title}</h3>
+        </a>
+        <p class="text product__text">${this.description}</p>
+        <p class="product__text_pink padding_sale">${this.price}</p>
+    </div>
+</article> -->
+
+
+
         <a href="#" class="all_products__link product__text_pink">
             <p class="product__link_text">Перейти ко всем товарам</p>
         </a>
@@ -135,7 +204,16 @@
     <footer class="footer">
         <p class="footer__text"> &#169;Вишнякова 2021</p>
     </footer>
+
+</div>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="script.js"></script>
+
+        
+</div>
 </body>
 
 </html>

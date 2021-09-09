@@ -266,6 +266,34 @@ color: #000000;
   position: relative;
 }
 
+.header__search-form{
+    position: relative;
+    margin-right: 50px;
+    display: inline-block;
+}
+.header__search-field:focus{
+    outline: none;
+}
+.header__search-field {
+    box-sizing: border-box;
+    width: 200px;
+    color: #fafafa;
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #fafafa;
+}
+
+.btn-search {
+    background-color: transparent;
+    border: none;
+    color: #fafafa;
+    font-size: 1.2em;
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+}
+
 
 .header__basket{
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
@@ -301,6 +329,9 @@ color: #000000;
     transition: all ease-in-out .4s;
     cursor: pointer;
 }
+
+
+
 
 
 
