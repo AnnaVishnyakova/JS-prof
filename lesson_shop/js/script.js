@@ -3,15 +3,16 @@ const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-a
 const app = new Vue({
     el: '#app',
     data: {
-        userSearch: '', 
-        showCart: false,
-        catalogUrl: '/catalogData.json',
+        userSearch: '', //строка с фильром изначально пустая
+        showCart: false, // свойство для показа товара в корзинке
+        catalogUrl: '/catalogData.json', // файлик из внешнего апи 
         cartUrl: 'getBasket.json',
         cartItems: [],//массив корзины товаров
         filtered: [], // массив отфильтрованный товаров
         imgCart: 'https://placehold.it/50x100',
         products: [], //массив каталога товаров
-        imgProduct: 'https://placehold.it/200x150'
+        imgProduct: 'https://placehold.it/200x150',
+        error: false
     },
     methods: {
         getJson(url){ //получение внешних данных в виде обьекта
@@ -38,19 +39,19 @@ const app = new Vue({
                 .then(data => {
                     if (data.result === 1) {
                         if(item.quantity>1){
-                            item.quantity--;
+                            item.quantity--;//если выбранного товара много, то уменьшаем на 1
                         } else {
-                            this.cartItems.splice(this.cartItems.indexOf(item), 1);
+                            this.cartItems.splice(this.cartItems.indexOf(item), 1);// если товар 1 то удаляется из массива корзины
                         }
                     }
                 })
         },
         filter(){ //метод фильтрации
-            let regexp = new RegExp(this.userSearch, 'i');
-            this.filtered =  this.products.filter(el => regexp.test(el.product_name));
+            let regexp = new RegExp(this.userSearch, 'i');//правило
+            this.filtered =  this.products.filter(el => regexp.test(el.product_name));// сравнение с правилом
         }
     },
-    mounted(){ //заполняем только пока массивы
+    mounted(){ //заполняем только пока массивы. запускается в первую очередь
         this.getJson(`${API + this.cartUrl}`) //парсинг из внешних данных
             .then(data => {
                 for (let item of data.contents){
